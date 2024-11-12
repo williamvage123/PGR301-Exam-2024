@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  image-gen-devops
+
+  SAM Template for image-gen-devops
+
+Globals:
+  Function:
+    Timeout: 60  # Adjusted timeout for longer API calls
+    MemorySize: 256
+
+Resources:
+  ImageGeneratorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: image-gen-devops/image-gen/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          S3_BUCKET_NAME: "pgr301-couch-explorers"  # Replace with your S3 bucket name
+          KANDIDATNUMMER: "79"  # Replace with your candidate number
+      Events:
+        GenerateImageApi:
+          Type: Api
+          Properties:
+            Path: /generate-image
+            Method: post
+      Policies:
+        - S3WritePolicy:  # Allows Lambda to write to the specified S3 bucket
+            BucketName: "pgr301-couch-explorers"
+        - Statement:  # Permissions to call AWS Bedrock
+            Effect: Allow
+            Action:
+              - bedrock:InvokeModel
+            Resource: "*"  # Restrict this to specific Bedrock model ARNs if possible
+
+  ApplicationResourceGroup:
+    Type: AWS::ResourceGroups::Group
+    Properties:
+      Name:
+        Fn::Sub: ApplicationInsights-SAM-${AWS::StackName}
+      ResourceQuery:
+        Type: CLOUDFORMATION_STACK_1_0
+
+  ApplicationInsightsMonitoring:
+    Type: AWS::ApplicationInsights::Application
+    Properties:
+      ResourceGroupName:
+        Ref: ApplicationResourceGroup
+      AutoConfigurationEnabled: 'true'
+
+Outputs:
+  ImageGeneratorApi:
+    Description: API Gateway endpoint URL for Prod stage for image generation function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/generate-image/"
+  ImageGeneratorFunctionArn:
+    Description: Image Generator Lambda Function ARN
+    Value: !GetAtt ImageGeneratorFunction.Arn
+  ImageGeneratorFunctionIamRole:
+    Description: IAM Role created for Image Generator function
+    Value: !GetAtt ImageGeneratorFunctionRole.Arn

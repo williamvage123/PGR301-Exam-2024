@@ -1,0 +1,31 @@
+{
+  "body": "{\"prompt\": \"Vintage Paris Trip\"}",
+  "resource": "/generate-image",
+  "path": "/generate-image",
+  "httpMethod": "POST",
+  "isBase64Encoded": false,
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "requestContext": {
+    "accountId": "123456789012",
+    "resourceId": "123456",
+    "stage": "prod",
+    "requestId": "c6af9ac6-7b61-11e6-9a41-93e8deadbeef",
+    "requestTime": "09/Apr/2015:12:34:56 +0000",
+    "requestTimeEpoch": 1428582896000,
+    "identity": {
+      "sourceIp": "127.0.0.1",
+      "userAgent": "Custom User Agent String"
+    },
+    "path": "/prod/generate-image",
+    "resourcePath": "/generate-image",
+    "httpMethod": "POST",
+    "apiId": "1234567890",
+    "protocol": "HTTP/1.1"
+  }
+}

@@ -1,0 +1,16 @@
+# AWS SAM build files
+.aws-sam/
+
+# Python bytecode files
+__pycache__/
+*.pyc
+
+# Dependency directories
+node_modules/
+.venv/
+
+# Logs and temp files
+*.log
+*.tmp
+.env
+.DS_Store
