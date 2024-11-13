@@ -52,6 +52,6 @@ jobs:
         run: |
           sam deploy --no-confirm-changeset --stack-name image-gen-devops-79 \
             --capabilities CAPABILITY_IAM \
-            --region eu-west-1
+            --region eu-west-1 \
             --resolve-s3 \
             -t sam_lambda/image-gen-devops/template.yaml
