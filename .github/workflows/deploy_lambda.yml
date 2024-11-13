@@ -33,7 +33,7 @@ jobs:
         run: |
           python3 -m venv .venv
           source .venv/bin/activate
-          pip install -r image-gen-devops/image-gen/requirements.txt
+          pip install -r sam_lambda/image-gen-devops/image-gen/requirements.txt
 
       # Step 5: Configure AWS credentials
       - name: Configure AWS credentials
