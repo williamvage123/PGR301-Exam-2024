@@ -54,4 +54,4 @@ jobs:
             --capabilities CAPABILITY_IAM \
             --region eu-west-1 \
             --resolve-s3 \
-            -t sam_lambda/image-gen-devops/template.yaml
+            -t sam_lambda/template.yaml
