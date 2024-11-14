@@ -19,7 +19,7 @@ provider "aws" {
 
 # SQS Queue for Image Processing
 resource "aws_sqs_queue" "image_processing_queue" {
-  name = "image-processing-queue"
+  name = "image-processing-queue-79"
 }
 
 # IAM Role for Lambda
@@ -37,10 +37,10 @@ resource "aws_iam_role" "lambda_sqs_role" {
   })
 }
 
-# IAM Policy for SQS and S3 access
+# IAM Policy for SQS, S3, and Bedrock access
 resource "aws_iam_policy" "lambda_sqs_policy" {
   name        = "lambda_sqs_policy"
-  description = "Permissions for Lambda to read from SQS and write to S3"
+  description = "Permissions for Lambda to read from SQS, write to S3, and invoke Bedrock models"
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -53,6 +53,16 @@ resource "aws_iam_policy" "lambda_sqs_policy" {
         Effect   = "Allow",
         Action   = ["s3:PutObject"],
         Resource = "arn:aws:s3:::pgr301-couch-explorers/*"
+      },
+      {
+        Effect   = "Allow",
+        Action   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
+        Resource = "arn:aws:logs:*:*:*"
+      },
+      {
+        Effect   = "Allow",
+        Action   = ["bedrock:InvokeModel"],
+        Resource = "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-image-generator-v1"
       }
     ]
   })
@@ -66,12 +76,13 @@ resource "aws_iam_role_policy_attachment" "lambda_sqs_role_attach" {
 
 # Lambda Function for Processing Messages from SQS
 resource "aws_lambda_function" "image_processor_lambda" {
-  function_name    = "image_processor_lambda"
+  function_name    = "image_processor_lambda_79" #Updated with my id
   role             = aws_iam_role.lambda_sqs_role.arn
   handler          = "lambda_sqs.lambda_handler"  # Entry point for lambda_sqs.py
   runtime          = "python3.8"
   timeout          = 15
-  source_code_hash = filebase64sha256("path/to/lambda_sqs.zip")  # Replace with the actual path to lambda_sqs.zip
+  filename         = "lambda_sqs.zip" #Specify the local ZIP file
+  source_code_hash = filebase64sha256("lambda_sqs.zip")  # Replace with the actual path to lambda_sqs.zip
 
   environment {
     variables = {
