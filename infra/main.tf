@@ -68,7 +68,7 @@ resource "aws_iam_policy" "lambda_sqs_policy" {
   })
 }
 
-# Attach IAM Policy to IAM Role
+# Attach IAM Policy to the Role Managed by Terraform
 resource "aws_iam_role_policy_attachment" "lambda_sqs_role_attach" {
   role       = aws_iam_role.lambda_sqs_role.name
   policy_arn = aws_iam_policy.lambda_sqs_policy.arn
@@ -76,12 +76,12 @@ resource "aws_iam_role_policy_attachment" "lambda_sqs_role_attach" {
 
 # Lambda Function for Processing Messages from SQS
 resource "aws_lambda_function" "image_processor_lambda" {
-  function_name    = "image_processor_lambda_79" #Updated with my id
-  role             = aws_iam_role.lambda_sqs_role.arn
+  function_name    = "image_processor_lambda_79" # Updated with your ID
+  role             = aws_iam_role.lambda_sqs_role.arn # Use Terraform-managed role
   handler          = "lambda_sqs.lambda_handler"  # Entry point for lambda_sqs.py
   runtime          = "python3.8"
   timeout          = 15
-  filename         = "lambda_sqs.zip" #Specify the local ZIP file
+  filename         = "lambda_sqs.zip" # Specify the local ZIP file
   source_code_hash = filebase64sha256("lambda_sqs.zip")  # Replace with the actual path to lambda_sqs.zip
 
   environment {
