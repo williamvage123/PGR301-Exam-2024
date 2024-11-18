@@ -29,8 +29,7 @@ jobs:
 
     - name: Build Lambda ZIP
       run: |
-        cd infra
-        zip lambda_sqs.zip lambda_sqs.py
+        zip infra/lambda_sqs.zip lambda_sqs.py
 
     - name: Initialize Terraform
       run: terraform init
