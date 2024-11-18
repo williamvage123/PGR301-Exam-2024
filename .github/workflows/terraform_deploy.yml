@@ -27,13 +27,20 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-1
 
+    - name: Build Lambda ZIP
+      run: |
+        zip infra/lambda_sqs.zip lambda_sqs.py
+
     - name: Initialize Terraform
       run: terraform init
+      working-directory: infra
 
     - name: Terraform Plan
       if: github.ref != 'refs/heads/main'
       run: terraform plan
+      working-directory: infra
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve
+      working-directory: infra
