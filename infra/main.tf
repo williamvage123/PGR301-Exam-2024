@@ -98,4 +98,4 @@ resource "aws_lambda_event_source_mapping" "sqs_to_lambda" {
   batch_size       = 10
 }
 
-# Testing Terraform plan workflow
+# Handing in task 2b.
