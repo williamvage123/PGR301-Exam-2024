@@ -10,16 +10,24 @@ jobs:
     runs-on: ubuntu-latest  # Specify the environment for the job
 
     steps:
+      # Step 1: Checkout the code from the repository
       - name: Checkout code
-        uses: actions/checkout@v3  # This checks out the repository code
+        uses: actions/checkout@v3  # This checks out the code from your GitHub repository
 
+      # Step 2: Log in to Docker Hub using credentials from GitHub secrets
       - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v2  # This action logs into Docker Hub using your credentials
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}  # GitHub secret for Docker Hub username
-          password: ${{ secrets.DOCKER_PASSWORD }}  # GitHub secret for Docker Hub password
+          username: ${{ secrets.DOCKER_USERNAME }}  # Docker Hub username stored in GitHub secrets
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub password or personal access token
 
+      # Step 3: Use the GitHub SHA for tagging the Docker image
+      - name: Set Docker image tag based on commit SHA
+        id: set_tag
+        run: echo "IMAGE_TAG=${GITHUB_SHA}" >> $GITHUB_ENV  # Set the tag to GitHub commit SHA
+
+      # Step 4: Build and push Docker image
       - name: Build and push Docker image
         run: |
-          docker build -f java_sqs_client/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:latest java_sqs_client  # Build the image from the java_sqs_client folder
-          docker push ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:latest  # Push the image to Docker Hub
+          docker build -f java_sqs_client/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }} .  # Build the image with the commit SHA as the tag
+          docker push ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }}  # Push the Docker image with the tag
