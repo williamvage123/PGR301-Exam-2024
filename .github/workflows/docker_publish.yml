@@ -30,7 +30,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           # Build the image using the context of the entire repository
-          docker build -f java_sqs_client/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }} .  # Build the image with the commit SHA as the tag
+          docker build -f java_sqs_client/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }} ./java_sqs_client  # Build the image with the commit SHA as the tag
 
           # Push the image to Docker Hub with the tag
           docker push ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }}  # Push the Docker image with the tag
