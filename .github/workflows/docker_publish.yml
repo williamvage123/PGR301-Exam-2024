@@ -1,0 +1,25 @@
+name: Docker Publish
+
+on:
+  push:
+    branches:
+      - main  # This triggers the workflow when there is a push to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Specify the environment for the job
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # This checks out the repository code
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}  # GitHub secret for Docker Hub username
+          password: ${{ secrets.DOCKER_PASSWORD }}  # GitHub secret for Docker Hub password
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:latest .  # Build the image
+          docker push ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:latest  # Push the image to Docker Hub
