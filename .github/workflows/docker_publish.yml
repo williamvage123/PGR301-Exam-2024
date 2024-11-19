@@ -21,5 +21,5 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -f java_sqs_client/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:latest .  # Build the image from the java_sqs_client folder
+          docker build -f java_sqs_client/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:latest java_sqs_client  # Build the image from the java_sqs_client folder
           docker push ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:latest  # Push the image to Docker Hub
