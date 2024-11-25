@@ -25,6 +25,3 @@ COPY --from=build /app/target/imagegenerator-0.0.1-SNAPSHOT.jar imagegenerator.j
 
 # Set the entry point to run the jar file
 ENTRYPOINT ["java", "-jar", "imagegenerator.jar"]
-
-# Expose port (adjust if necessary)
-EXPOSE 8080
