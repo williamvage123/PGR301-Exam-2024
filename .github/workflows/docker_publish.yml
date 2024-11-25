@@ -26,11 +26,15 @@ jobs:
         id: set_tag
         run: echo "IMAGE_TAG=${GITHUB_SHA}" >> $GITHUB_ENV  # Set the tag to GitHub commit SHA
 
-      # Step 4: Build and push Docker image
+      # Step 4: Build and push Docker image with both SHA and :latest tags
       - name: Build and push Docker image
         run: |
-          # Build the image using the context of the entire repository
-          docker build -f java_sqs_client/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }} ./java_sqs_client  # Build the image with the commit SHA as the tag
+          # Build the image with the commit SHA tag
+          docker build -f java_sqs_client/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }} ./java_sqs_client
 
-          # Push the image to Docker Hub with the tag
-          docker push ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }}  # Push the Docker image with the tag
+          # Add the latest tag to the same image
+          docker tag ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }} ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:latest
+
+          # Push both the commit SHA tag and the latest tag
+          docker push ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/java-sqs-client:latest
