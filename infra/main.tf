@@ -19,12 +19,12 @@ provider "aws" {
 
 # SQS Queue for Image Processing
 resource "aws_sqs_queue" "image_processing_queue" {
-  name = "image-processing-queue-79"
+  name = "image-processing-queue-k79"
 }
 
 # IAM Role for Lambda
 resource "aws_iam_role" "lambda_sqs_role" {
-  name = "lambda_sqs_role"
+  name = "lambda_sqs_role_k79"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -39,7 +39,7 @@ resource "aws_iam_role" "lambda_sqs_role" {
 
 # IAM Policy for SQS, S3, and Bedrock access
 resource "aws_iam_policy" "lambda_sqs_policy" {
-  name        = "lambda_sqs_policy"
+  name        = "lambda_sqs_policy_k79"
   description = "Permissions for Lambda to read from SQS, write to S3, and invoke Bedrock models"
   policy = jsonencode({
     Version = "2012-10-17",
@@ -76,7 +76,7 @@ resource "aws_iam_role_policy_attachment" "lambda_sqs_role_attach" {
 
 # Lambda Function for Processing Messages from SQS
 resource "aws_lambda_function" "image_processor_lambda" {
-  function_name    = "image_processor_lambda_79" # Updated with your ID
+  function_name    = "image_processor_lambda_k79" # Updated with your ID
   role             = aws_iam_role.lambda_sqs_role.arn # Use Terraform-managed role
   handler          = "lambda_sqs.lambda_handler"  # Entry point for lambda_sqs.py
   runtime          = "python3.8"
