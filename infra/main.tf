@@ -17,6 +17,12 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+# Variable for CloudWatch Alarm Email
+variable "alarm_email" {
+  description = "The email address to receive alarm notifications"
+  type        = string
+}
+
 # SQS Queue for Image Processing
 resource "aws_sqs_queue" "image_processing_queue" {
   name = "image-processing-queue-k79"
@@ -98,5 +104,30 @@ resource "aws_lambda_event_source_mapping" "sqs_to_lambda" {
   batch_size       = 10
 }
 
-# Handing in task 2b.
-# Adding another comment to test something
+# SNS Topic for CloudWatch Alarm notifications
+resource "aws_sns_topic" "sqs_alarm_topic" {
+  name = "sqs-cloudwatch-alarm-topic-k79"
+}
+
+# SNS Subscription for Email Notifications
+resource "aws_sns_topic_subscription" "sqs_alarm_email" {
+  topic_arn = aws_sns_topic.sqs_alarm_topic.arn
+  protocol  = "email"
+  endpoint  = var.alarm_email  # Email provided via Terraform variable
+}
+
+# CloudWatch Alarm for ApproximateAgeOfOldestMessage
+resource "aws_cloudwatch_metric_alarm" "age_of_oldest_message_alarm" {
+  alarm_name          = "AgeOfOldestMessageTooHigh-k79"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  metric_name         = "ApproximateAgeOfOldestMessage"
+  namespace           = "AWS/SQS"
+  period              = 60  # Check the metric every 60 seconds
+  statistic           = "Maximum"
+  threshold           = 120  # Trigger alarm if age of the oldest message >= 120 seconds
+  alarm_actions       = [aws_sns_topic.sqs_alarm_topic.arn]
+  dimensions = {
+    QueueName = aws_sqs_queue.image_processing_queue.name
+  }
+}
