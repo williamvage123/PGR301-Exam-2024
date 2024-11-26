@@ -3,7 +3,7 @@
 ## Oppgave 1 AWS Lambda
 ## Oppgave 1A:
 ### HTTP Endepunkt for Lambda Funksjonen:
-    `https://ra9v34knf1.execute-api.eu-west-1.amazonaws.com/Prod/generate-image/`
+`https://ra9v34knf1.execute-api.eu-west-1.amazonaws.com/Prod/generate-image/`
 
 ### Testing med curl:
 Her kan du teste enten med 'curl' eller i Postman:  
