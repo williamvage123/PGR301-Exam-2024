@@ -87,7 +87,6 @@ resource "aws_sns_topic_subscription" "sqs_alarm_email" {
   run: terraform plan -var="alarm_email=your-email@example.com"
 ```
 - Hvis du bruker Terraform lokalt, sørg for å oppdatere variabelen der også.
-- 
 
 ## Oppgave 5: Serverless vs Mikrotjenester
 
