@@ -74,7 +74,7 @@ resource "aws_sns_topic_subscription" "sqs_alarm_email" {
   topic_arn = aws_sns_topic.sqs_alarm_topic.arn
   protocol  = "email"
   endpoint  = "william.vage@gmail.com" # Endre denne til din e-postadresse
-}```
+}```  
 - Endre verdien for variablen i `terraform_deploy.yml` i både `Terraform Plan` og `Terraform Apply` stegene.
 ```bash
 - name: Terraform Plan
