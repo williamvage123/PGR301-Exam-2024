@@ -37,7 +37,7 @@ jobs:
 
     - name: Terraform Plan
       if: github.ref != 'refs/heads/main'
-      run: terraform plan
+      run: terraform plan -var="alarm_email=william.vage@gmail.com"
       working-directory: infra
 
     - name: Terraform Apply
