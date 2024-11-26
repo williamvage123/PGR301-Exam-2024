@@ -21,8 +21,8 @@ Resources:
         - x86_64
       Environment:
         Variables:
-          S3_BUCKET_NAME: "pgr301-couch-explorers"  # Replace with your S3 bucket name
-          KANDIDATNUMMER: "79"  # Replace with your candidate number
+          S3_BUCKET_NAME: "pgr301-couch-explorers"
+          KANDIDATNUMMER: "79"
       Events:
         GenerateImageApi:
           Type: Api

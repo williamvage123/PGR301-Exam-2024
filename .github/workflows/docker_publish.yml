@@ -12,7 +12,7 @@ jobs:
     steps:
       # Step 1: Checkout the code from the repository
       - name: Checkout code
-        uses: actions/checkout@v3  # This checks out the code from your GitHub repository
+        uses: actions/checkout@v3  # This checks out the code from my GitHub repository
 
       # Step 2: Log in to Docker Hub using credentials from GitHub secrets
       - name: Log in to Docker Hub

@@ -82,7 +82,7 @@ resource "aws_iam_role_policy_attachment" "lambda_sqs_role_attach" {
 
 # Lambda Function for Processing Messages from SQS
 resource "aws_lambda_function" "image_processor_lambda" {
-  function_name    = "image_processor_lambda_k79" # Updated with your ID
+  function_name    = "image_processor_lambda_k79" # Updated function with my id
   role             = aws_iam_role.lambda_sqs_role.arn # Use Terraform-managed role
   handler          = "lambda_sqs.lambda_handler"  # Entry point for lambda_sqs.py
   runtime          = "python3.8"
