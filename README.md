@@ -87,3 +87,61 @@ resource "aws_sns_topic_subscription" "sqs_alarm_email" {
   run: terraform plan -var="alarm_email=your-email@example.com"
 ```
 - Hvis du bruker Terraform lokalt, sørg for å oppdatere variabelen der også.
+- 
+
+## Oppgave 5: Serverless vs Mikrotjenester
+
+### Automatisering og kontinuerlig levering (CI/CD)
+
+#### Serverless:
+- CI/CD pipelines blir mer fragmentert fordi hver Lambda-funksjon kan ha sin egen livssyklus.
+- Verktøy som AWS SAM og Serverless Framework forenkler deploy, men håndtering av mange små komponenter kan øke kompleksiteten.
+- Raskere utrulling siden funksjoner kan oppdateres uavhengig.
+
+#### Mikrotjenester:
+- CI/CD pipelines er ofte enklere å håndtere da de er fokusert på større tjenester.
+- Deployment kan være tregere siden flere avhengigheter oppdateres samtidig.
+- Orkestreringsverktøy som Kubernetes hjelper med å administrere utrullingsstrategier, men krever mer oppsett.
+
+
+### Observability (overvåkning)
+
+#### Serverless:
+- Logging og overvåking distribueres på tvers av mange små funksjoner, noe som krever verktøy som AWS CloudWatch.
+- Feilsøking kan være utfordrende da hendelser spres over flere funksjoner og tjenester.
+- Manglende direkte tilgang til infrastruktur gjør dyp feilsøking vanskelig.
+
+#### Mikrotjenester:
+- Tjenestebasert arkitektur gjør logging og feilsøking enklere å spore.
+- Krever mer oppsett for metrics og overvåkning, men gir mer detaljert kontroll.
+
+
+### Skalarbarhet og kostnadskontroll
+
+#### Serverless:
+- Skalerer automatisk basert på behov, og kostnadene er "pay as you go".
+- God ressursutnyttelse ved uforutsigbar belastning, men kan bli dyrt ved konstant høy trafikk.
+- Begrensninger som maksimal kjøretid på bare minutter kan være en ulempe.
+
+#### Mikrotjenester:
+- Gir full kontroll over ressursbruk og skaleringsstrategier.
+- Overprovisjonering kan føre til høyere faste kostnader.
+- passer bedre for stabile arbeidsmengder med jevn trafikk.
+
+
+### Eierskap og ansvar
+
+#### Serverless:
+- Reduserer teamets ansvar for drift og infrastruktur, det håndteres av AWS.
+- Gir mindre kontroll, men høy fleksibilitet og rask utvikling.
+- Krever spesialkompetanse for å feilsøke serverless-arkitekturer.
+
+
+#### Mikrotjenester:
+- Teamet har full kontroll over infrastrukturen, som øker ansvar for ytelse og pålitelighet.
+- Mer koordingering mellomg team nødvendig for å sikre integrasjon.
+- Tilbyr mer fleksibilitet for skreddersydde løsninger.
+
+## Konklusjon
+- **Serverless** er best for systemer med uforutsigbar belastning og fokus på rask utvikling, mens **mikrotjenester** passer for komplekse systemer som krever høy kontroll og skalerbarhet.
+- Valget avhenger av organisasjonens behov for skalerbarhet, fleksibilitet og ressurskontroll.
