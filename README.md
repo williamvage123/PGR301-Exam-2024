@@ -37,6 +37,11 @@ Den opprettede SQS-kø URL-en finnes her:
 
 ## Oppgave 3: Javaklient og Docker
 
+### Beskrivelse av taggestrategi:
+Jeg valgte å kombinere to strategier for tagging. For hver endring blir Docker imaget tagget med både:
+ -  Commit SHA: Då får vi en unik indifikator for hver versjon av koden, som gjør at det er enkelt å spore/rulle tilbake til en versjon.
+ -  `latest`: Då får vi den nyeste versjonen av imaget som gjør at det blir enkelt å trekke imaget unten å spesifisere en spesifikk versjon.
+
 ### Dockerhub image name:
 `wiva002/java-sqs-client:latest`
 
