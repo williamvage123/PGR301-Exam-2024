@@ -69,7 +69,7 @@ docker run --rm \
 ### Beskrivelse av alarmen
 CloudWatch Alarm for **SQS ApproximateAgeOfOldestMessage** er konfigurert i Terraform.
 - **Terskelverdi**: Alarm trigges når alder på eldste melding overstiger `120 sekunder`.
-- **E-postvarsling**: E-postvarsling er hardkodet med min e-postadresse (`william.vage@gmail.com`) for testing. Det ble gjort fordi oppgaven ikke spesifiserte at det skulle settes opp en secret for e-postadressen. I praksis burde man gjøre det.
+- **E-postvarsling**: E-postvarsling er hardkodet med min e-postadresse `william.vage@gmail.com` for testing. Det ble gjort fordi oppgaven ikke spesifiserte at det skulle settes opp en secret for e-postadressen. I praksis burde man gjøre det.
 
 ### Viktig informasjon
 E-postadressen for alarmvarsling er konfigurert som en variabel `var.alarm_email` i Terraform-koden. For å teste eller bruke alarmen med en annen e-postadresse, må følgende oppdateres:
