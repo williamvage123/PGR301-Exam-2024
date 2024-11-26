@@ -12,6 +12,7 @@ Husk å skrive noe inne i "prompt" feltet! F.eks: "A man on top of an airplane."
 curl -X POST https://ra9v34knf1.execute-api.eu-west-1.amazonaws.com/Prod/generate-image/ \
 -H "Content-Type: application/json" \
 -d '{ "prompt": "" }'
+```
 
 ## Oppgave 1 - B:
 ### Lenke til vellykket kjøring av GitHub Actions workflow som har deployet SAM-applikasjonen til aws:
