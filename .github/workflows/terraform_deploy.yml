@@ -42,5 +42,5 @@ jobs:
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve -var="william.vage@gmail.com"
+      run: terraform apply -auto-approve -var="alarm_email=william.vage@gmail.com"
       working-directory: infra
