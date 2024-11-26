@@ -72,15 +72,7 @@ CloudWatch Alarm for **SQS ApproximateAgeOfOldestMessage** er konfigurert i Terr
 - **E-postvarsling**: E-postvarsling er hardkodet med min e-postadresse (`william.vage@gmail.com`) for testing. Det ble gjort fordi oppgaven ikke spesifiserte at det skulle settes opp en secret for e-postadressen. I praksis burde man gjøre det.
 
 ### Viktig informasjon
-For å bruke alarmen med en annen e-postadresse:
-- Endre verdien for e-postadressen i `main.tf` under `aws_sns_topic_subscription`.
-```bash
-resource "aws_sns_topic_subscription" "sqs_alarm_email" {
-  topic_arn = aws_sns_topic.sqs_alarm_topic.arn
-  protocol  = "email"
-  endpoint  = "william.vage@gmail.com" # Endre denne til din e-postadresse
-}
-```  
+E-postadressen for alarmvarsling er konfigurert som en variabel `var.alarm_email` i Terraform-koden. For å teste eller bruke alarmen med en annen e-postadresse, må følgende oppdateres:
 - Endre verdien for variablen i `terraform_deploy.yml` i både `Terraform Plan` og `Terraform Apply` stegene.
 ```bash
 - name: Terraform Plan
