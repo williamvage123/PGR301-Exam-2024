@@ -74,3 +74,4 @@ def lambda_handler(event, context):
             "statusCode": 400,
             "body": json.dumps({"message": f"Error processing request: {str(e)}"})
         }
+#Handing in task 1b
